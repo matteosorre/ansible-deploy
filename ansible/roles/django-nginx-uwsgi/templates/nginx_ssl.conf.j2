@@ -1,0 +1,40 @@
+server {
+    listen 80;
+    server_name {{ server_name }};
+
+    location / {
+        rewrite ^ https://$http_host$request_uri? permanent;  # force redirect http to https
+    }
+    location /.well-known/ {
+        # file per challenge letsencrypt
+        alias /var/www/html/.well-known/;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name {{ server_name }};
+
+    ssl_certificate     /etc/letsencrypt/live/{{ server_name }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ server_name }}/privkey.pem;
+
+    location / {
+        # django
+        uwsgi_pass unix:///run/uwsgi/app/{{ server_name }}/socket;
+        include uwsgi_params;
+        uwsgi_read_timeout 300s;
+        client_max_body_size 32m;
+    }
+    location /static/ {
+        # file statici
+        alias {{ static_dir }}/; # ending slash is required
+    }
+    location /media/ {
+        # file media caricati dall'utente
+        alias {{ media_dir }}/; # ending slash is required
+    }
+    location /.well-known/ {
+        # file per challenge letsencrypt
+        alias /var/www/html/.well-known/;
+    }
+}

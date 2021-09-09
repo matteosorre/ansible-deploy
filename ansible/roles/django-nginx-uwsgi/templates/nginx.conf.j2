@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name {{ server_name }};
+
+    location / {
+        # django
+        uwsgi_pass unix:///run/uwsgi/app/{{ server_name }}/socket;
+        include uwsgi_params;
+        uwsgi_read_timeout 300s;
+        client_max_body_size 32m;
+    }
+    location /static/ {
+        # file statici
+        alias {{ static_dir }}/; # ending slash is required
+    }
+    location /media/ {
+        # file media caricati dall'utente
+        alias {{ media_dir }}/; # ending slash is required
+    }
+}

@@ -1,0 +1,29 @@
+---
+- name: MySQL setup
+  block:
+  - name: Create database
+    mysql_db:
+      login_host: "{{ dbhost }}"
+      login_user: "{{ login_user }}"
+      login_password: "{{ login_password }}"
+      name: "{{dbname}}"
+  # - name: Removes all host user accounts
+  #   mysql_user:
+  #     login_host: "{{ dbhost }}"
+  #     login_user: "{{ login_user }}"
+  #     login_password: "{{ login_password }}"
+  #     name: "{{dbuser}}"
+  #     host_all: yes
+  #     state: absent
+  - name: Grant privileges to database
+    mysql_user:
+      login_host: "{{ dbhost }}"
+      login_user: "{{ login_user }}"
+      login_password: "{{ login_password }}"
+      name: "{{dbuser}}"
+      password: "{{dbpassword}}"
+      host: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+      priv: "{{dbname}}.*:ALL"
+  vars:
+    login_user: "{{ admin_dbuser }}"
+    login_password: "{{ admin_dbpassword }}"

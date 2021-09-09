@@ -1,0 +1,13 @@
+---
+- name: Installing required packages
+  become: True
+  apt:
+    pkg:
+      - libmysqlclient-dev
+      - python3-pip
+    state: present
+- name: Make sure pymysql is present
+  become: true # needed if the other tasks are not played as root
+  pip:
+    name: pymysql
+    state: present

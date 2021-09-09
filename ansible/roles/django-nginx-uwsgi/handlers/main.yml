@@ -1,0 +1,8 @@
+---
+# handlers file for django-nginx-uwsgi
+- name: restart nginx
+  become: True
+  service: name=nginx state=restarted
+- name: restart uwsgi
+  become: True
+  service: name=uwsgi state=restarted

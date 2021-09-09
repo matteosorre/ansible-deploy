@@ -1,0 +1,7 @@
+[uwsgi]
+chdir = {{ django_dir }}
+env = DJANGO_SETTINGS_MODULE={{ django_project }}.settings.{{ deploy_environment }}
+virtualenv = {{ virtualenv_path }}
+wsgi-file = {{ django_project }}/wsgi.py
+workers = {{ uwsgi_workers }}
+plugins = python3

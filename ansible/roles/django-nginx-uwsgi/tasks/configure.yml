@@ -1,0 +1,27 @@
+---
+- name: create static_root dir
+  file: path={{ static_dir }} state=directory mode=0755
+- name: create media_root dir
+  file: path={{ media_dir }} state=directory mode=0777
+- name: create commands_log_path dir
+  file: path={{ commands_log_path }} state=directory mode=0755
+- name: nginx config file
+  become: True
+  template:
+    src: "{{ role_path }}/templates/nginx.conf.j2"
+    dest: "/etc/nginx/sites-enabled/{{ server_name }}"
+  notify:
+    - restart nginx
+- name: uwsgi config file
+  become: True
+  template:
+    src: "{{ role_path }}/templates/uwsgi.ini.j2"
+    dest: "/etc/uwsgi/apps-enabled/{{ server_name }}.ini"
+  notify:
+    - restart uwsgi
+- name: cron config
+  become: True
+  template:
+    src: "{{ cron_template_path }}"
+    dest: "/etc/cron.d/django_cron"
+  when: cron_template_path is defined

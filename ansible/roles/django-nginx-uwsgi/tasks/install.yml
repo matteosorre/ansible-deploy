@@ -1,0 +1,11 @@
+---
+- name: Installing required packages
+  become: True
+  apt:
+    pkg:
+      - uwsgi
+      - uwsgi-plugin-python3
+      - nginx
+      - virtualenv
+      - fail2ban
+    state: present
