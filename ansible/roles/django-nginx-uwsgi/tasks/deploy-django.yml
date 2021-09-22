@@ -25,6 +25,12 @@
         dest: "{{ django_dir }}"
       notify:
         - restart uwsgi
+    - name: Save commit hash in version module
+      copy:
+        content: "GIT_REV='{{ git_rev }}'\n"
+        dest: "{{ django_dir }}/{{ django_project }}/version.py"
+        mode: 0644
+      when: git_rev is defined
     - name: .env file in Django directory
       template:
         src: "{{ env_template_path }}"
