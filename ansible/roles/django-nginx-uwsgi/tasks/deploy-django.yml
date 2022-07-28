@@ -7,7 +7,7 @@
   block:
     - name: Create Django project sources archive
       archive:
-        path: "{{ project_repo_path }}/django/"
+        path: "{{ django_src_path }}"
         dest: "{{ django_src_archive_path }}"
       delegate_to: localhost
     - name: Clean Django dir on remote server
@@ -33,12 +33,12 @@
       when: git_rev is defined
     - name: .env file in Django directory
       template:
-        src: "{{ env_template_path }}"
+        src: "{{ django_env_template_path }}"
         dest: "{{ django_dir }}/.env"
-      when: env_template_path is defined
+      when: django_env_template_path is defined
     - name: Create Python requirements archive
       archive:
-        path: "{{ project_repo_path }}/requirements/"
+        path: "{{ python_requirements_path }}"
         dest: "{{ requirements_archive_path }}"
       delegate_to: localhost
     - name: Create Python requirements dir on the remote server

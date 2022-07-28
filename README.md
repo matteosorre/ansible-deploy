@@ -40,7 +40,9 @@ dbuser: django_yourproject
 dbpassword: "{{ lookup('env', 'DJANGO_DB_PASSWD') }}"
 database_url: "{{ dbtype }}://{{ dbuser }}:{{ dbpassword }}@{{ dbhost }}/{{ dbname }}"
 project_repo_path: "../../{{ project_name }}"
-env_template_path: "{{ project_repo_path }}/ansible/templates/env.j2"
+python_requirements_path: "{{ project_repo_path }}/requirements/"
+django_src_path: "{{ project_repo_path}}/django/"
+django_env_template_path: "{{ project_repo_path }}/ansible/templates/env.j2"
 deploy_environment: production
 uwsgi_workers: 1
 git_rev: "{{ lookup('env', 'CIRCLE_SHA1') }}"
