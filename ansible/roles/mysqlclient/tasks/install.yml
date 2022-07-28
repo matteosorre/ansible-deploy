@@ -1,5 +1,12 @@
 ---
-- name: Installing required packages
+- name: Installing required server packages
+  become: true
+  apt:
+    pkg:
+      - mysql-server
+    state: present
+  when: needs_db_server
+- name: Installing required client packages
   become: True
   apt:
     pkg:
