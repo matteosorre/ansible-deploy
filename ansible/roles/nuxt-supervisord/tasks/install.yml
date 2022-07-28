@@ -1,0 +1,16 @@
+---
+- name: Add YARN official apt repository
+  become: True
+  apt_repository:
+    repo: deb https://dl.yarnpkg.com/debian/ stable main
+    state: present
+- name: Update APT cache
+  become: True
+  apt: update_cache=yes
+- name: Installing required packages
+  become: True
+  apt:
+    pkg:
+      - supervisor
+      - yarn
+    state: present

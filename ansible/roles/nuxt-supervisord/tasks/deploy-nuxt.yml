@@ -1,0 +1,37 @@
+---
+- name: Nuxt update sources and requirements
+  tags: nuxt
+  vars:
+    nuxt_build_archive_path: /tmp/nuxt-build.tar.gz
+  block:
+    - name: Create Nuxt build archive
+      archive:
+        path: "{{ nuxt_src_path }}/"
+        dest: "{{ nuxt_build_archive_path }}"
+      delegate_to: localhost
+    - name: Clean Nuxt root dir on server
+      file:
+        path: "{{ nuxt_dir }}"
+        state: absent
+    - name: Create Nuxt root dir on the remote server
+      file:
+        path: "{{ nuxt_dir }}"
+        state: directory
+        mode: 0755
+    - name: Copy Nuxt build to the remote server
+      unarchive:
+        src: "{{ nuxt_build_archive_path }}"
+        dest: "{{ nuxt_dir }}"
+      notify:
+        - restart supervisord
+    - name: Install Node requirements with yarn
+      yarn:
+        path: "{{ nuxt_dir }}"
+        production: yes
+      notify:
+        - restart supervisord
+    - name: .env file in Nuxt directory
+      template:
+        src: "{{ nuxt_env_template_path }}"
+        dest: "{{ nuxt_dir }}/.env"
+      when: nuxt_env_template_path is defined

@@ -1,0 +1,7 @@
+---
+# handlers file for nuxt-supervisord
+- name: restart supervisord
+  become: True
+  supervisorctl:
+    name: "{{ server_name }}"
+    state: restarted
