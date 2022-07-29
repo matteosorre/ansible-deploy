@@ -6,7 +6,7 @@
   block:
     - name: Create Nuxt build archive
       archive:
-        path: "{{ nuxt_src_path }}/"
+        path: "{{ nuxt_src_path }}"
         dest: "{{ nuxt_build_archive_path }}"
       delegate_to: localhost
     - name: Clean Nuxt root dir on server
