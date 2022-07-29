@@ -1,2 +1,1 @@
 ansible~=6.1
-ansible-base~=6.1
