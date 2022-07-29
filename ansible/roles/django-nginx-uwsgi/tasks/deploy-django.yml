@@ -73,7 +73,7 @@
     - name: Execute django loaddata
       django_manage:
         command: loaddata
-        fixtures: "{{ django_fixtures }}"
+        fixtures: "{{ django_fixtures }}"  # A space-delimited list of fixture file names to load in the database
         project_path: "{{ django_dir }}"
         virtualenv: "{{ virtualenv_path }}"
       when: django_fixtures is defined
