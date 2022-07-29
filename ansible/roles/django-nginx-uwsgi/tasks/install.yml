@@ -9,3 +9,16 @@
       - virtualenv
       - fail2ban
     state: present
+- name: Installing GeoDjango required packages
+  become: True
+  apt:
+    pkg:
+      - libgdal26
+    state: present
+  when: dbtype == 'postgis'
+- name: Installing extra packages
+  become: True
+  apt:
+    pkg: "{{ extra_apt_packages }}"
+    state: present
+  when: extra_apt_packages is defined

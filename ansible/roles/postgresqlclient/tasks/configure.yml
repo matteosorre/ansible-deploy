@@ -16,3 +16,8 @@
       role_attr_flags: "NOSUPERUSER,NOCREATEDB"
   - name: Ensure DB user password is correct
     command: "psql -c \"ALTER ROLE {{ dbuser }} WITH PASSWORD '{{ dbpassword }}';\""
+  - name: Add postgis extension to DB
+    postgresql_ext:
+      db: "{{ dbname }}"
+      name: "postgis"
+    when: dbtype == 'postgis'
