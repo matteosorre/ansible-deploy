@@ -30,7 +30,7 @@
         production: yes
       notify:
         - restart supervisord
-    - name: .env file in Nuxt directory
+    - name: Copy .env file in Nuxt directory
       template:
         src: "{{ nuxt_env_template_path }}"
         dest: "{{ nuxt_dir }}/.env"

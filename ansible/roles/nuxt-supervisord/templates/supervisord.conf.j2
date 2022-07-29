@@ -1,6 +1,6 @@
 [program:{{ server_name }}]
 directory={{ nuxt_dir }}
 command=node ./node_modules/.bin/nuxt start
-user=ubuntu
+user=www-data
 autostart=true
 autorestart=true

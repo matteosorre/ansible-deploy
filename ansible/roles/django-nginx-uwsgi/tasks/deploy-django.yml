@@ -47,7 +47,7 @@
       unarchive:
         src: "{{ requirements_archive_path }}/"
         dest: "{{ requirements_dir }}"
-    - name: Install python requirements
+    - name: Install Python requirements
       pip:
         requirements: "{{ requirements_dir }}/{{ deploy_environment }}.txt"
         extra_args: --upgrade

@@ -1,5 +1,5 @@
 ---
-- name: supervisord config file
+- name: Copy supervisord config file
   become: True
   template:
     src: "{{ role_path }}/templates/supervisord.conf.j2"
