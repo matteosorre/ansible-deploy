@@ -31,7 +31,7 @@
         dest: "{{ django_dir }}/{{ django_project }}/version.py"
         mode: 0644
       when: git_rev is defined
-    - name: .env file in Django directory
+    - name: Copy .env file in Django directory
       template:
         src: "{{ django_env_template_path }}"
         dest: "{{ django_dir }}/.env"
@@ -47,7 +47,7 @@
       unarchive:
         src: "{{ requirements_archive_path }}/"
         dest: "{{ requirements_dir }}"
-    - name: install python requirements
+    - name: Install python requirements
       pip:
         requirements: "{{ requirements_dir }}/{{ deploy_environment }}.txt"
         extra_args: --upgrade
@@ -60,17 +60,17 @@
   environment:
     DJANGO_SETTINGS_MODULE: "{{ django_project }}.settings.{{ deploy_environment }}"
   block:
-    - name: django collectstatic
+    - name: Execute django collectstatic
       django_manage:
         command: collectstatic
         project_path: "{{ django_dir }}"
         virtualenv: "{{ virtualenv_path }}"
-    - name: django migrate
+    - name: Execute django migrate
       django_manage:
         command: migrate
         project_path: "{{ django_dir }}"
         virtualenv: "{{ virtualenv_path }}"
-    - name: django loaddata
+    - name: Execute django loaddata
       django_manage:
         command: loaddata
         fixtures: "{{ django_fixtures }}"
