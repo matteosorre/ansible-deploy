@@ -8,7 +8,7 @@
 - name: nginx config file
   become: True
   template:
-    src: "{{ role_path }}/templates/nginx.conf.j2"
+    src: "{{ role_path }}/templates/nginx_{{ nginx_config_variant }}.conf.j2"
     dest: "/etc/nginx/sites-enabled/{{ server_name }}"
   notify:
     - restart nginx
