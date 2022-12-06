@@ -5,24 +5,11 @@
     django_src_archive_path: /tmp/django-src.tar.gz
     requirements_archive_path: /tmp/requirements.tar.gz
   block:
-    - name: Create Django project sources archive
-      archive:
-        path: "{{ django_src_path }}"
-        dest: "{{ django_src_archive_path }}"
-      delegate_to: localhost
-    - name: Clean Django dir on remote server
-      file:
-        path: "{{ django_dir }}"
-        state: absent
-    - name: Create Django dir on remote server
-      file:
-        path: "{{ django_dir }}"
-        state: directory
-        mode: 0755
-    - name: Copy Django project sources to the remote server
-      unarchive:
-        src: "{{ django_src_archive_path }}"
+    - name: Sync Django project sources on remote
+      synchronize:
+        src: "{{ django_src_path }}"
         dest: "{{ django_dir }}"
+        delete: true
       notify:
         - restart uwsgi
     - name: Save commit hash in version module
@@ -37,16 +24,10 @@
         dest: "{{ django_dir }}/.env"
       when: django_env_template_path is defined
     - name: Create Python requirements archive
-      archive:
+      synchronize:
         path: "{{ python_requirements_path }}"
-        dest: "{{ requirements_archive_path }}"
-      delegate_to: localhost
-    - name: Create Python requirements dir on the remote server
-      file: path={{ requirements_dir }} state=directory mode=0755
-    - name: Copy Python requirements to the remote server
-      unarchive:
-        src: "{{ requirements_archive_path }}/"
         dest: "{{ requirements_dir }}"
+        delete: true
     - name: Install Python requirements
       pip:
         requirements: "{{ requirements_dir }}/{{ deploy_environment }}.txt"
