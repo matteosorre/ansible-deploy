@@ -21,3 +21,4 @@
       db: "{{ dbname }}"
       name: "postgis"
     when: dbtype == 'postgis'
+  when: dbname is defined
