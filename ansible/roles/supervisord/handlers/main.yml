@@ -1,0 +1,7 @@
+---
+# handlers file for supervisord
+- name: restart supervisord
+  become: True
+  supervisorctl:
+    name: all
+    state: restarted
