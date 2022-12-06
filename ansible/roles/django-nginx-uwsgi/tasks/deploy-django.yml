@@ -25,7 +25,7 @@
       when: django_env_template_path is defined
     - name: Create Python requirements archive
       synchronize:
-        path: "{{ python_requirements_path }}"
+        src: "{{ python_requirements_path }}"
         dest: "{{ requirements_dir }}"
         delete: true
     - name: Install Python requirements
