@@ -27,3 +27,4 @@
   vars:
     login_user: "{{ admin_dbuser }}"
     login_password: "{{ admin_dbpassword }}"
+  when: dbhost is defined

@@ -5,7 +5,7 @@
     pkg:
       - mysql-server
     state: present
-  when: needs_db_server
+  when: needs_db_server is defined and needs_db_server
 - name: Installing required client packages
   become: True
   apt:

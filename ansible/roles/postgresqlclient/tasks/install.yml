@@ -5,14 +5,14 @@
     pkg:
       - postgresql
     state: present
-  when: needs_db_server
+  when: needs_db_server is defined and needs_db_server
 - name: Installing PostGIS required packages
   become: True
   apt:
     pkg:
       - postgis
     state: present
-  when: needs_db_server and dbtype == 'postgis'
+  when: needs_db_server is defined and needs_db_server and dbtype == 'postgis'
 - name: Installing required client packages
   become: true
   apt:
