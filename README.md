@@ -59,11 +59,9 @@ jobs:
   deploy:
     executor: python/default
     steps:
+      - checkout
       - run: |
-          mkdir ~/.ssh && chmod 700 ~/.ssh
-          echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-          git clone --branch << pipeline.git.branch >> git@github.com:baxeico/ansible-deploy.git
-          git clone --branch << pipeline.git.branch >> git@github.com:youruser/yourproject.git
+          git clone https://github.com/baxeico/ansible-deploy.git
       - python/install-packages:
           pip-dependency-file: ansible-deploy/requirements/circleci.txt
           pkg-manager: pip
