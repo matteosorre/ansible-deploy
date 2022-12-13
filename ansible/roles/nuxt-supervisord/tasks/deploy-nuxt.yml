@@ -4,24 +4,11 @@
   vars:
     nuxt_build_archive_path: /tmp/nuxt-build.tar.gz
   block:
-    - name: Create Nuxt build archive
-      archive:
-        path: "{{ nuxt_src_path }}"
-        dest: "{{ nuxt_build_archive_path }}"
-      delegate_to: localhost
-    - name: Clean Nuxt root dir on server
-      file:
-        path: "{{ nuxt_dir }}"
-        state: absent
-    - name: Create Nuxt root dir on the remote server
-      file:
-        path: "{{ nuxt_dir }}"
-        state: directory
-        mode: 0755
-    - name: Copy Nuxt build to the remote server
-      unarchive:
-        src: "{{ nuxt_build_archive_path }}"
+    - name: Sync Nuxt build on remote
+      synchronize:
+        src: "{{ nuxt_src_path }}"
         dest: "{{ nuxt_dir }}"
+        delete: true
       notify:
         - restart supervisord
     - name: Install Node requirements with yarn
