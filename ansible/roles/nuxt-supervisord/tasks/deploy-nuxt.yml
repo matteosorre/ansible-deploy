@@ -4,6 +4,11 @@
   vars:
     nuxt_build_archive_path: /tmp/nuxt-build.tar.gz
   block:
+    - name: Create Nuxt root dir on the remote server
+      file:
+        path: "{{ nuxt_dir }}"
+        state: directory
+        mode: 0755
     - name: Sync Nuxt build on remote
       synchronize:
         src: "{{ nuxt_src_path }}"
