@@ -4,11 +4,6 @@
   vars:
     nuxt_build_archive_path: /tmp/nuxt-build.tar.gz
   block:
-    - name: Create Nuxt root dir on the remote server
-      file:
-        path: "{{ nuxt_dir }}"
-        state: directory
-        mode: 0755
     - name: Sync Nuxt build on remote
       synchronize:
         src: "{{ nuxt_src_path }}"
@@ -16,6 +11,11 @@
         delete: true
       notify:
         - restart supervisord
+    - name: Fix permissions for Nuxt root dir on the remote server
+      file:
+        path: "{{ nuxt_dir }}"
+        state: directory
+        mode: 0755
     - name: Install Node requirements with yarn
       yarn:
         path: "{{ nuxt_dir }}"
