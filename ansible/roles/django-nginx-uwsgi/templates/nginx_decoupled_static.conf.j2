@@ -14,7 +14,7 @@ server {
 
     location / {
         expires $expires;
-        root {{ frontend_dir }}
+        root {{ frontend_dir }};
     }
     location /static/ {
         # file statici
