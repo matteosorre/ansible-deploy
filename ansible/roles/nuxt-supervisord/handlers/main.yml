@@ -5,3 +5,4 @@
   supervisorctl:
     name: "{{ server_name }}"
     state: restarted
+  when: nuxt_supervisord is defined and nuxt_supervisord

@@ -22,6 +22,7 @@
         production: yes
       notify:
         - restart supervisord
+      when: nuxt_supervisord is defined and nuxt_supervisord
     - name: Copy .env file in Nuxt directory
       template:
         src: "{{ nuxt_env_template_path }}"
