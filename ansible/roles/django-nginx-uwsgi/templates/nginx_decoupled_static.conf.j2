@@ -15,6 +15,8 @@ server {
     location / {
         expires $expires;
         root {{ frontend_dir }};
+        # Let /path/subpath/subsubpath/ be served always from index.html (SPA).
+        try_files $uri $uri/ /index.html;
     }
     location /static/ {
         # file statici
