@@ -4,4 +4,10 @@ env = DJANGO_SETTINGS_MODULE={{ django_project }}.settings.{{ deploy_environment
 virtualenv = {{ virtualenv_path }}
 wsgi-file = {{ django_project }}/wsgi.py
 workers = {{ uwsgi_workers }}
+{% if uwsgi_max_requests %}
+max-requests = {{ uwsgi_max_requests }}
+{% endif %}
+{% if uwsgi_log_format %}
+log-format = {{ uwsgi_log_format }}
+{% endif %}
 plugins = python3
