@@ -10,4 +10,7 @@ max-requests = {{ uwsgi_max_requests }}
 {% if uwsgi_log_format is defined %}
 log-format = {{ uwsgi_log_format }}
 {% endif %}
+{% if uwsgi_buffer_size is defined %}
+buffer-size = {{ uwsgi_buffer_size }}
+{% endif %}
 plugins = python3
