@@ -32,7 +32,7 @@ server {
         # file media caricati dall'utente
         alias {{ media_dir }}/; # ending slash is required
     }
-    location ~ ^/(api|openapi|apidoc|admin)/?(.*) {
+    location ~ ^/((api|openapi|apidoc|admin)/?(.*)|sitemap(.*)\.xml) {
         # django
         uwsgi_pass unix:///run/uwsgi/app/{{ server_name }}/socket;
         include uwsgi_params;
