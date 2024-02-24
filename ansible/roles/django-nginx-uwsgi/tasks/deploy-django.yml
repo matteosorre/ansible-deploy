@@ -23,6 +23,11 @@
         src: "{{ django_env_template_path }}"
         dest: "{{ django_dir }}/.env"
       when: django_env_template_path is defined
+    - name: Copy setenv file in Django directory
+      template:
+        src: "{{ django_setenv_template_path }}"
+        dest: "{{ django_dir }}/setenv"
+      when: django_setenv_template_path is defined
     - name: Sync Python requirements on remote
       synchronize:
         src: "{{ python_requirements_path }}"
