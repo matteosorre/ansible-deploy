@@ -25,5 +25,5 @@
   become: True
   template:
     src: "{{ cron_template_path }}"
-    dest: "/etc/cron.d/django_cron"
+    dest: "/etc/cron.d/{{ project_name }}_cron"
   when: cron_template_path is defined
