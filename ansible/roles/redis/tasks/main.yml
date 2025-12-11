@@ -1,0 +1,5 @@
+---
+# tasks file for redis
+- import_tasks: install.yml
+- import_tasks: configure.yml
+- import_tasks: setup-django-q.yml

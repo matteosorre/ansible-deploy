@@ -1,0 +1,21 @@
+---
+- name: Installing Redis server
+  become: true
+  apt:
+    pkg:
+      - redis-server
+    state: present
+  when: needs_redis_server is defined and needs_redis_server
+
+- name: Installing Redis client packages for Python
+  become: true
+  apt:
+    pkg:
+      - python3-pip
+    state: present
+
+- name: Installing redis Python package
+  become: true
+  pip:
+    name: redis
+    state: present

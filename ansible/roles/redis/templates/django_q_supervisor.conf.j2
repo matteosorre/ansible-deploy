@@ -1,0 +1,11 @@
+[program:django_q]
+directory={{ root_dir }}
+command={{ virtualenv_path }}/bin/python {{ root_dir }}/manage.py qcluster
+user={{ django_q_user }}
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile={{ django_q_log_file }}
+stderr_logfile={{ django_q_log_file }}
+startsecs=10
+stopwaitsecs=600

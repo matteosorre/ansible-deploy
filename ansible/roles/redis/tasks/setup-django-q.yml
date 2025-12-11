@@ -1,0 +1,32 @@
+---
+- name: Install supervisor for Django-Q
+  become: true
+  apt:
+    pkg:
+      - supervisor
+    state: present
+  when: configure_django_q
+
+- name: Create Django-Q supervisord configuration
+  become: true
+  template:
+    src: "{{ role_path }}/templates/django_q_supervisor.conf.j2"
+    dest: "/etc/supervisor/conf.d/django_q.conf"
+  when: configure_django_q
+  notify: restart supervisord
+
+- name: Ensure supervisor service is started and enabled
+  become: true
+  service:
+    name: supervisor
+    state: started
+    enabled: yes
+  when: configure_django_q
+
+- name: Start Django-Q worker via supervisorctl
+  become: true
+  supervisorctl:
+    name: django_q
+    state: started
+  when: configure_django_q
+  ignore_errors: yes

@@ -1,0 +1,14 @@
+---
+# handlers file for redis
+- name: restart redis
+  become: true
+  service:
+    name: redis-server
+    state: restarted
+
+- name: restart supervisord
+  become: true
+  supervisorctl:
+    name: django_q
+    state: restarted
+  ignore_errors: yes

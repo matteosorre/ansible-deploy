@@ -1,0 +1,13 @@
+---
+# defaults file for redis
+needs_redis_server: true
+redis_bind: 127.0.0.1
+redis_port: 6379
+redis_maxmemory: 256mb
+redis_maxmemory_policy: allkeys-lru
+
+# Django-Q configuration
+configure_django_q: false
+django_q_workers: 1
+django_q_user: www-data
+django_q_log_file: /var/log/django_q.log

@@ -1,0 +1,23 @@
+---
+- name: Configure Redis server
+  become: true
+  lineinfile:
+    path: /etc/redis/redis.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - { regexp: '^bind ', line: 'bind {{ redis_bind }}' }
+    - { regexp: '^port ', line: 'port {{ redis_port }}' }
+    - { regexp: '^# maxmemory ', line: 'maxmemory {{ redis_maxmemory }}' }
+    - { regexp: '^# maxmemory-policy ', line: 'maxmemory-policy {{ redis_maxmemory_policy }}' }
+  when: needs_redis_server is defined and needs_redis_server
+  notify: restart redis
+
+- name: Ensure Redis is started and enabled on boot
+  become: true
+  service:
+    name: redis-server
+    state: started
+    enabled: yes
+  when: needs_redis_server is defined and needs_redis_server

@@ -1,0 +1,27 @@
+# Django-Q Configuration for Redis
+# Add this to your Django settings.py
+
+Q_CLUSTER = {
+    'name': 'DjangORM',
+    'workers': 4,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': '{{ redis_bind }}',
+        'port': {{ redis_port }},
+        'db': 0,
+        'password': None,
+        'socket_timeout': None,
+        'charset': 'utf-8',
+        'errors': 'strict',
+        'unix_socket_path': None
+    }
+}
+
+# Required packages to install in your Django project:
+# pip install django-q redis
