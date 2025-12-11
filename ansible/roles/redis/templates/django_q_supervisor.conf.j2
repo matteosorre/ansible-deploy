@@ -9,3 +9,4 @@ stdout_logfile={{ django_q_log_file }}
 stderr_logfile={{ django_q_log_file }}
 startsecs=10
 stopwaitsecs=600
+environment=DJANGO_SETTINGS_MODULE={{ django_project }}.settings.{{ deploy_environment }}
