@@ -1,6 +1,6 @@
 [program:django_q]
-directory={{ root_dir }}
-command={{ virtualenv_path }}/bin/python {{ root_dir }}/manage.py qcluster
+directory={{ django_dir }}
+command={{ virtualenv_path }}/bin/python {{ django_dir }}/manage.py qcluster
 user={{ django_q_user }}
 autostart=true
 autorestart=true
