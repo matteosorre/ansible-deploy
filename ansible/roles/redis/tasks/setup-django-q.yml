@@ -11,7 +11,7 @@
   become: true
   template:
     src: "{{ role_path }}/templates/django_q_supervisor.conf.j2"
-    dest: "/etc/supervisor/conf.d/django_q.conf"
+    dest: "/etc/supervisor/conf.d/{{ project_name }}_django_q.conf"
   when: configure_django_q
   notify: restart supervisord
 
@@ -26,7 +26,7 @@
 - name: Start Django-Q worker via supervisorctl
   become: true
   supervisorctl:
-    name: django_q
+    name: "{{ project_name }}_django_q"
     state: started
   when: configure_django_q
   ignore_errors: yes

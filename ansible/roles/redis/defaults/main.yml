@@ -10,4 +10,4 @@ redis_maxmemory_policy: allkeys-lru
 configure_django_q: false
 django_q_workers: 1
 django_q_user: www-data
-django_q_log_file: /var/log/django_q.log
+django_q_log_file: /var/log/{{ project_name }}_django_q.log

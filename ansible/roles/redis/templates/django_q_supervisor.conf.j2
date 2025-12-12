@@ -1,4 +1,4 @@
-[program:django_q]
+[program:{{ project_name }}_django_q]
 directory={{ django_dir }}
 command={{ virtualenv_path }}/bin/python {{ django_dir }}/manage.py qcluster
 user={{ django_q_user }}

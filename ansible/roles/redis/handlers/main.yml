@@ -9,6 +9,6 @@
 - name: restart supervisord
   become: true
   supervisorctl:
-    name: django_q
+    name: "{{ project_name }}_django_q"
     state: restarted
   ignore_errors: yes
