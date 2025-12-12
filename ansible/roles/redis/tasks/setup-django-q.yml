@@ -27,6 +27,6 @@
   become: true
   supervisorctl:
     name: "{{ project_name }}_django_q"
-    state: started
+    state: restarted
   when: configure_django_q
   ignore_errors: yes
