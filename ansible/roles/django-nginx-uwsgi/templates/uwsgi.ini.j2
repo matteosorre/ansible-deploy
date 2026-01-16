@@ -13,4 +13,4 @@ log-format = {{ uwsgi_log_format }}
 {% if uwsgi_buffer_size is defined %}
 buffer-size = {{ uwsgi_buffer_size }}
 {% endif %}
-plugins = python3
+plugins = {{ uwsgi_plugins | default('python3') }}
