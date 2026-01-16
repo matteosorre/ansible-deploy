@@ -38,7 +38,7 @@
         requirements: "{{ requirements_dir }}/{{ deploy_environment }}.txt"
         extra_args: --upgrade
         virtualenv: "{{ virtualenv_path }}"
-        virtualenv_python: python3
+        virtualenv_python: "{{ virtualenv_python | default('python3') }}"
       notify:
         - restart uwsgi
 - name: Django commands
