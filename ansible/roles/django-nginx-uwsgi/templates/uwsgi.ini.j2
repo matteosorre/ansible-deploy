@@ -8,6 +8,7 @@ workers = {{ uwsgi_workers }}
 max-requests = {{ uwsgi_max_requests }}
 {% endif %}
 {% if uwsgi_log_format is defined %}
+logvar = {{ uwsgi_logvar }}
 log-format = {{ uwsgi_log_format }}
 {% endif %}
 {% if uwsgi_buffer_size is defined %}
