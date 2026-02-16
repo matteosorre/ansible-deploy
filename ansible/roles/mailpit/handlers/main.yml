@@ -1,0 +1,11 @@
+---
+- name: reload systemd
+  become: True
+  systemd:
+    daemon_reload: yes
+
+- name: restart mailpit
+  become: True
+  service:
+    name: mailpit
+    state: restarted

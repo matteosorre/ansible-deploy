@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: matteosorre
+  description: Install and configure Mailpit for email testing
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+        - noble
+    - name: Debian
+      versions:
+        - bullseye
+        - bookworm
+dependencies: []

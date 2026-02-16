@@ -90,3 +90,45 @@ Let's setup that:
 * In CircleCI project settings go in "SSH Keys" > "Additional SSH Keys" and click "Add Key". Copy the private key generated at step before;
 * Now login to your target server and add the public key in the `.ssh/authorized_keys` file for the user that will be used by Ansible for deploy.
 * Add the DJANGO_DB_PASSWD environment variable to your CircleCi project configuration. That will be used to setup the database used by Django.
+
+# Mailpit role
+
+The `mailpit` role installs and configures [Mailpit](https://mailpit.axe.email/), a lightweight email testing tool with an SMTP server and a web UI for inspecting captured emails. This is useful for development and staging environments where you don't want to send real emails.
+
+## Usage
+
+Use the `deploy_mailpit.yaml` playbook:
+
+```
+ansible-playbook -i ../../yourproject/ansible/hosts deploy_mailpit.yaml
+```
+
+Or add the `mailpit` role to your existing playbook:
+
+```yaml
+roles:
+  - postgresqlclient
+  - django-nginx-uwsgi
+  - mailpit
+```
+
+Then configure your Django application to use Mailpit as the email backend:
+
+```
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=localhost
+EMAIL_PORT=1025
+```
+
+The Mailpit web interface will be available at `http://your-server:8025`.
+
+## Configuration variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `mailpit_version` | `v1.21.8` | Mailpit release version |
+| `mailpit_listen_smtp` | `0.0.0.0:1025` | SMTP listen address |
+| `mailpit_listen_http` | `0.0.0.0:8025` | Web UI listen address |
+| `mailpit_max_messages` | `500` | Maximum number of messages to store |
+| `mailpit_user` | `mailpit` | System user for the service |
+| `mailpit_group` | `mailpit` | System group for the service |
