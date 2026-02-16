@@ -128,7 +128,23 @@ The Mailpit web interface will be available at `http://your-server:8025`.
 |---|---|---|
 | `mailpit_version` | `v1.21.8` | Mailpit release version |
 | `mailpit_listen_smtp` | `0.0.0.0:1025` | SMTP listen address |
-| `mailpit_listen_http` | `0.0.0.0:8025` | Web UI listen address |
+| `mailpit_listen_http` | `127.0.0.1:8025` | Web UI listen address (localhost by default) |
 | `mailpit_max_messages` | `500` | Maximum number of messages to store |
 | `mailpit_user` | `mailpit` | System user for the service |
 | `mailpit_group` | `mailpit` | System group for the service |
+| `mailpit_nginx` | `false` | Enable nginx reverse proxy for the web UI |
+| `mailpit_nginx_server_name` | `""` | Server name for nginx (e.g. `mail.example.com`) |
+| `mailpit_nginx_ssl` | `false` | Enable HTTPS with Let's Encrypt certificates |
+
+## Nginx reverse proxy
+
+To expose the Mailpit web UI via nginx with HTTPS (e.g. `https://mail.spoc.online`), set these variables:
+
+```yaml
+mailpit_nginx: true
+mailpit_nginx_server_name: mail.spoc.online
+mailpit_nginx_ssl: true
+```
+
+This will configure nginx as a reverse proxy with SSL using Let's Encrypt certificates.
+Make sure the certificates are already available at `/etc/letsencrypt/live/{{ mailpit_nginx_server_name }}/` (e.g. via `certbot`).

@@ -9,3 +9,9 @@
   service:
     name: mailpit
     state: restarted
+
+- name: restart nginx
+  become: True
+  service:
+    name: nginx
+    state: restarted

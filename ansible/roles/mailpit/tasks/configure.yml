@@ -15,3 +15,12 @@
     name: mailpit
     enabled: yes
     state: started
+
+- name: Deploy Mailpit nginx configuration
+  become: True
+  template:
+    src: nginx_mailpit.conf.j2
+    dest: /etc/nginx/sites-enabled/mailpit
+  notify:
+    - restart nginx
+  when: mailpit_nginx and mailpit_nginx_server_name

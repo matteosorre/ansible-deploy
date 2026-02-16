@@ -1,7 +1,10 @@
 ---
 mailpit_version: "v1.21.8"
 mailpit_listen_smtp: "0.0.0.0:1025"
-mailpit_listen_http: "0.0.0.0:8025"
+mailpit_listen_http: "127.0.0.1:8025"
 mailpit_max_messages: 500
 mailpit_user: mailpit
 mailpit_group: mailpit
+mailpit_nginx: false
+mailpit_nginx_server_name: ""
+mailpit_nginx_ssl: false
