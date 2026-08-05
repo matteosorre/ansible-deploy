@@ -1,0 +1,43 @@
+---
+- name: Create mailpit system group
+  become: True
+  group:
+    name: "{{ mailpit_group }}"
+    system: yes
+    state: present
+
+- name: Create mailpit system user
+  become: True
+  user:
+    name: "{{ mailpit_user }}"
+    group: "{{ mailpit_group }}"
+    system: yes
+    shell: /usr/sbin/nologin
+    create_home: no
+
+- name: Determine system architecture
+  set_fact:
+    mailpit_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+
+- name: Download Mailpit binary
+  become: True
+  get_url:
+    url: "https://github.com/axllent/mailpit/releases/download/{{ mailpit_version }}/mailpit-linux-{{ mailpit_arch }}.tar.gz"
+    dest: /tmp/mailpit.tar.gz
+    mode: '0644'
+
+- name: Extract Mailpit binary
+  become: True
+  unarchive:
+    src: /tmp/mailpit.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+    creates: /usr/local/bin/mailpit
+
+- name: Set Mailpit binary permissions
+  become: True
+  file:
+    path: /usr/local/bin/mailpit
+    mode: '0755'
+    owner: root
+    group: root

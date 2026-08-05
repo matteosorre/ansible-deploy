@@ -1,0 +1,26 @@
+---
+- name: Deploy Mailpit systemd service
+  become: True
+  template:
+    src: mailpit.service.j2
+    dest: /etc/systemd/system/mailpit.service
+    mode: '0644'
+  notify:
+    - reload systemd
+    - restart mailpit
+
+- name: Enable and start Mailpit service
+  become: True
+  systemd:
+    name: mailpit
+    enabled: yes
+    state: started
+
+- name: Deploy Mailpit nginx configuration
+  become: True
+  template:
+    src: nginx_mailpit.conf.j2
+    dest: /etc/nginx/sites-enabled/mailpit
+  notify:
+    - restart nginx
+  when: mailpit_nginx and mailpit_nginx_server_name

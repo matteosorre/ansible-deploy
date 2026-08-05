@@ -1,0 +1,17 @@
+[Unit]
+Description=Mailpit - email testing tool
+After=network.target
+
+[Service]
+Type=simple
+User={{ mailpit_user }}
+Group={{ mailpit_group }}
+ExecStart=/usr/local/bin/mailpit \
+  --smtp {{ mailpit_listen_smtp }} \
+  --listen {{ mailpit_listen_http }} \
+  --max {{ mailpit_max_messages }}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
